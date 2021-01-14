@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 
@@ -29,5 +30,20 @@ public class UserController {
     public String saveUser(@ModelAttribute User user) {
         data.registerNewUser(user);
         return ("redirect:/users");
+    }
+
+    @GetMapping("/login")
+    public ModelAndView loginUser() {
+        return new ModelAndView("login", "user", new User());
+    }
+
+    @PostMapping("/login")
+    @ResponseBody
+    public String validateUser(@ModelAttribute User user) {
+        boolean valid = data.authenticateUser(user);
+        if(valid) {
+            return "login success";
+        }
+        return "login fail";
     }
 }

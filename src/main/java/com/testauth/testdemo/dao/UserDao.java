@@ -19,6 +19,12 @@ public class UserDao implements Dao {
 
     @Override
     public boolean authenticateUser(User user) {
+        for (User u : users()) {
+            if (u.getUsername().equals(user.getUsername())
+                    && u.getPassword().equals(user.getPassword())) {
+                return true;
+            }
+        }
         return false;
     }
 
