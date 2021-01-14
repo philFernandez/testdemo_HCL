@@ -3,6 +3,7 @@ package com.testauth.testdemo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import com.testauth.testdemo.dao.UserDao;
 import com.testauth.testdemo.model.User;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,6 +16,11 @@ public class RegistrationTest {
         service = new UserDao();
         user = User.builder().username("Phil").password("123").build();
         service.registerNewUser(user);
+    }
+
+    @AfterEach
+    public void clearInMemDB() {
+        User.getUsers().clear();
     }
 
     @Test
